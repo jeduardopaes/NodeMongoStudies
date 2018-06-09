@@ -62,3 +62,6 @@ typings/
 
 # Lock do package-lock.json
 package-lock.json
+
+# Pasta de dados
+data

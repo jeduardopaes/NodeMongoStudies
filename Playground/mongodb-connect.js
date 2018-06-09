@@ -1,15 +1,15 @@
-// const MongoClient = require('mongodb').MongoClient;
-const {MongoClient, ObjectID} = require('mongodb');
+const MongoClient = require('mongodb').MongoClient;
+// const {MongoClient, ObjectID} = require('mongodb');
 
 
-MongoClient.connect('mongodb://localhost:27017/Tests', (err,db) =>{
+MongoClient.connect('mongodb://localhost:27017/DBTest', (err,db) =>{
   if(err){
     return console.log("Não conseguiu connectar."+err);
   }
   console.log("Conectado ao Mongodb server.");
   
   // var data = {
-  //   titulo : "Tarefa 3",
+  //   titulo : "Tarefa 1",
   //   texto: "Não ser otário.",
   //   finalizado: false
   // }

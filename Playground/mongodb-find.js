@@ -16,6 +16,13 @@ MongoClient.connect('mongodb://localhost:27017/Tests', (err,db) =>{
   //   console.log("Falhou!! ", err);
   // });
   
+  // db.collection('Todos').find({finalizado: false}).toArray().then((doc) => {
+  //   console.log('Todos');
+  //   console.log(JSON.stringify(doc, undefined, 2));
+  // }, (err) =>{
+  //   console.log("Falhou!! ", err);
+  // });
+
   db.collection('Todos').find({finalizado: false}).toArray().then((doc) => {
     console.log('Todos');
     console.log(JSON.stringify(doc, undefined, 2));
