@@ -11,15 +11,15 @@ var app = express();
 app.use(bodyParser.json());
 
 app.post('/todos', (req, res) => {
-  
+
   var todo = new Todo({
     text: req.body.text
   });
 
-  todo.save().then((doc)=>{
+  todo.save().then((doc) => {
     console.log("Salvando.");
     res.send(doc);
-  }, (e)=>{
+  }, (e) => {
     console.log("Unable to save.", e);
     res.status(400).send(e);
   });
@@ -31,3 +31,6 @@ app.post('/todos', (req, res) => {
 app.listen(3000, () => {
   console.log("Started on port 3000");
 });
+
+
+module.exports = { app };
