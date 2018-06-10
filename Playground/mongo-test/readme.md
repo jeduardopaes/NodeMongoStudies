@@ -1,0 +1,1 @@
+Para rodar os testes faça "npm run test-watch".
