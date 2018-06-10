@@ -1,0 +1,16 @@
+POST http://localhost:3000/todos
+Content-Type: application/json
+
+{
+  "text" : "Segundo criado com REST Client.",
+  "Completed" : false
+}
+
+###
+
+GET http://localhost:3000/todos
+Content-Type: :application/json
+
+
+###
+
