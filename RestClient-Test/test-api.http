@@ -36,11 +36,12 @@ Content-Type: application/json
 
 ### ================USERS======================
 
-POST http://localhost:3000/todos
+POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-  
+  "email":"eduardoa@example.com",
+  "password":"senha123"
 }
 
 
