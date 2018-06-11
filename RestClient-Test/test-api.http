@@ -19,6 +19,11 @@ Content-Type: application/json
 
 
 
+###
+
+DELETE http://localhost:3000/todos/5b1ddafd62527865502a21b6
+Content-Type: application/json
+
 ### ================USERS======================
 
 POST http://localhost:3000/todos
@@ -27,3 +32,21 @@ Content-Type: application/json
 {
   
 }
+
+
+
+### ================HEROKU======================
+
+POST https://arcane-ridge-64929.herokuapp.com/todos
+Content-Type: application/json
+
+{
+  "text" : "Criado através do RESTClient." 
+}
+
+###
+
+GET https://arcane-ridge-64929.herokuapp.com/todos
+Content-Type: application/json
+
+
