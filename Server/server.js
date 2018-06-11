@@ -21,11 +21,11 @@ app.post('/todos', (req, res) => {
 
   todo.save().then((doc) => {
     
-    console.log(`Salvo: ${doc}`)
+    //console.log(`Salvo: ${doc}`)
     res.send(doc);
   }, (e) => {
-    console.log("Unable to save.", e);
-    res.status(400).send(e);
+    //console.log("Unable to save.");
+    res.status(400).send();
   });
 
 });
@@ -34,7 +34,7 @@ app.get('/todos', (req, res)=>{
   Todo.find().then((todos)=>{
     res.send({todos});
   },(err)=>{
-    res.status(400).send(err);
+    res.status(400).send();
   });
 });
 
@@ -52,11 +52,11 @@ app.get('/todos/:id', (req,res)=>{
         res.status(404).send();
       }
 
-      console.log(`Encontrado: ${todo}`)
+      //console.log(`Encontrado: ${todo}`)
       res.status(200).send({todo});
 
     }).catch((err)=>{
-      console.log(err);
+      //console.log(err);
       res.status(400).send();
     });
 
@@ -74,8 +74,8 @@ app.delete('/todos/:id',(req,res)=>{
       return res.status(404).send();
     }
 
-    console.log(`Excluido: ${todo}`)
-    res.status(200).send(todo);
+    //console.log(`Excluido: ${todo}`)
+    res.status(200).send({todo});
 
   }).catch((err)=>{
     res.status(400).send();
