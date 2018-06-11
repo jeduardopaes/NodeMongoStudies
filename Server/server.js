@@ -40,20 +40,20 @@ app.get('/todos/:id', (req,res)=>{
   var id = req.params.id;
 
   if(!ObjectID.isValid(id)){
-    res.send('Id inválido.');
+    return res.status(404).send();
   }
 
   Todo.findById(id)
     .then((todo)=>{
       if(!todo){
-        res.status(404).send('');
+        res.status(404).send();
       }
 
-      res.status(200).send(JSON.stringify(todo,undefined,2));
+      res.status(200).send({todo});
 
     }).catch((err)=>{
       console.log(err);
-      res.status(400).send('');
+      res.status(400).send();
     });
 
 });

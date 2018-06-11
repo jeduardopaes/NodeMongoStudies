@@ -1,13 +1,16 @@
 const expect = require('expect');
 const request = require('supertest');
+const {ObjectID} = require('mongodb');
 
 
 const app = require('../server').app;
 const Todo = require('../models/todo').Todo;
 
 const todos =[{
+  _id: new ObjectID(),
   text: 'Fist todo.'
 },{
+  _id: new ObjectID(),
   text: 'Second todo.'
 }]
 
@@ -66,6 +69,18 @@ describe('POST/todos', () => {
         .expect(200)
         .expect((res)=>{
           expect(res.body.todos.length).toBe(2);
+        })
+        .end(done);
+    });
+  });
+
+  describe('get /todo/:id', ()=>{
+    it('Deve retornar todo doc', (done)=>{
+      request(app)
+        .get(`/todos/${todos[0]._id.toHexString()}`)
+        .expect(200)
+        .expect((res)=>{
+          expect(res.body.todo.text).toBe(todos[0].text);
         })
         .end(done);
     });
