@@ -24,6 +24,16 @@ Content-Type: application/json
 DELETE http://localhost:3000/todos/5b1ddafd62527865502a21b6
 Content-Type: application/json
 
+###
+
+PATCH http://localhost:3000/todos/5b1de4f24952bf05b54d5b16
+Content-Type: application/json
+
+{
+  "text" : "Alterado por REST Client.",
+  "completed" : true
+}
+
 ### ================USERS======================
 
 POST http://localhost:3000/todos
