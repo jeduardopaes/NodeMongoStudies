@@ -9,10 +9,15 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3000/todos
-Content-Type: :application/json
+Content-Type: application/json
 
 
 ###
+
+GET http://localhost:3000/todos/5b1daf41ab58cf2d4c2313a4
+Content-Type: application/json
+
+
 
 ### ================USERS======================
 
