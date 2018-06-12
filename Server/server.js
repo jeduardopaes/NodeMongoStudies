@@ -2,12 +2,13 @@ require('./config/config');
 const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
-const {ObjectID} = require('mongodb');
+const { ObjectID } = require('mongodb');
 
 
-const mongoose = require('./db/mongoose').mongoose;
-const Todo = require('./models/todo').Todo;
-const User = require('./models/user').User;
+const {mongoose} = require('./db/mongoose');
+const {Todo} = require('./models/todo');
+const {User} = require('./models/user');
+const {autenticate} = require('./middleware/autenticate');
 
 var app = express();
 
@@ -22,7 +23,7 @@ app.post('/todos', (req, res) => {
   });
 
   todo.save().then((doc) => {
-    
+
     //console.log(`Salvo: ${doc}`)
     res.send(doc);
   }, (e) => {
@@ -32,82 +33,82 @@ app.post('/todos', (req, res) => {
 
 });
 
-app.get('/todos', (req, res)=>{
-  Todo.find().then((todos)=>{
-    res.send({todos});
-  },(err)=>{
+app.get('/todos', (req, res) => {
+  Todo.find().then((todos) => {
+    res.send({ todos });
+  }, (err) => {
     res.status(400).send();
   });
 });
 
-app.get('/todos/:id', (req,res)=>{
+app.get('/todos/:id', (req, res) => {
   var id = req.params.id;
 
-  if(!ObjectID.isValid(id)){
+  if (!ObjectID.isValid(id)) {
     return res.status(404).send();
   }
 
   Todo.findById(id)
-    .then((todo)=>{
-      if(!todo){
+    .then((todo) => {
+      if (!todo) {
         res.status(404).send();
       }
 
       //console.log(`Encontrado: ${todo}`)
-      res.status(200).send({todo});
+      res.status(200).send({ todo });
 
-    }).catch((err)=>{
+    }).catch((err) => {
       //console.log(err);
       res.status(400).send();
     });
 
 });
 
-app.delete('/todos/:id',(req,res)=>{
+app.delete('/todos/:id', (req, res) => {
   var id = req.params.id;
 
-  if(!ObjectID.isValid(id)){
+  if (!ObjectID.isValid(id)) {
     return res.status(404).send();
   }
 
-  Todo.findByIdAndRemove(id).then((todo)=>{
-    if(!todo){
+  Todo.findByIdAndRemove(id).then((todo) => {
+    if (!todo) {
       return res.status(404).send();
     }
 
     //console.log(`Excluido: ${todo}`)
-    res.status(200).send({todo});
+    res.status(200).send({ todo });
 
-  }).catch((err)=>{
+  }).catch((err) => {
     res.status(400).send();
   });
 
 
 });
 
-app.patch('/todos/:id',(req,res)=>{
+app.patch('/todos/:id', (req, res) => {
   var id = req.params.id;
   var body = _.pick(req.body, ['text', 'completed']);
 
-  if(!ObjectID.isValid(id)){
+  if (!ObjectID.isValid(id)) {
     return res.status(404).send();
   }
 
-  if(_.isBoolean(body.completed) && body.completed){
+  if (_.isBoolean(body.completed) && body.completed) {
     body.completedAt = new Date().getTime();
-  }else{
+  } else {
     body.completed = false;
     body.completedAt = null;
   }
 
-  Todo.findByIdAndUpdate(id,{$set: body},{new: true}).then((todo)=>{
-    if(!todo){
+  Todo.findByIdAndUpdate(id, { $set: body }, { new: true }).then((todo) => {
+    if (!todo) {
       return res.status(404).send();
     }
 
-    res.status(200).send({todo});
+    res.status(200).send({ todo });
 
-  }).catch((err)=>{
+  }).catch((err) => {
     res.status(400).send();
   });
 
@@ -115,20 +116,26 @@ app.patch('/todos/:id',(req,res)=>{
 
 //=======USERS======
 
-app.post('/users',(req,res)=>{
-  var body = _.pick(req.body,['email','password']);
+app.post('/users', (req, res) => {
+  var body = _.pick(req.body, ['email', 'password']);
   var user = new User(body);
 
   // User.findByToken
   // user.generateAuthToken
 
-  user.save().then(()=>{
+  user.save().then(() => {
     return user.generateAuthToken();
-  }).then((token)=>{
+  }).then((token) => {
     res.status(200).header('x-auth', token).send(user);
-  }).catch((e)=>{
+  }).catch((e) => {
     res.status(400).send(e);
   })
+});
+
+
+
+app.get('/users/me', autenticate,(req, res) => {
+  res.send(req.user);
 });
 
 app.listen(port, () => {

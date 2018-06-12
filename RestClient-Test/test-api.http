@@ -43,6 +43,11 @@ Content-Type: application/json
   "email":"eduardoa@example.com",
   "password":"senha123"
 }
+###
+
+GET http://localhost:3000/users/me
+Content-Type: application/json
+x-auth: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjFmNDliOGVmYzZhYTBjNmZiNjkyMmQiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTI4Nzc3MTQ0fQ.o2pO-VAm6UEXsl-nPDceNQWj1BPh26B4UalBoOcp37w
 
 
 
